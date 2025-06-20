@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submit Your Details | Tata 1mg Partner</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 p-6">
+
+  <!-- Header -->
+  <header class="bg-red-600 text-white p-4 flex flex-col items-center text-center">
+    <h1 class="text-2xl font-bold">Tata 1mg Partner</h1>
+    <h3 class="text-lg italic mt-1">Enjoy Massive Discounts on All Your Healthcare Needs!</h3>
+  </header>
+
+  <p class="text-xl text-red-600 font-semibold mb-4 mt-4 text-center">
+      <span class="underline"><strong>Fill in your details to get added to the WhatsApp group!</strong></span></p>
+
+  <!-- Form Container -->
+  <div class="max-w-lg mx-auto bg-white p-8 rounded shadow mt-6">
+    <!-- <h1 class="text-2xl font-bold text-center mb-6">Submit Your Details</h1> -->
+
+    <form id="contactForm">
+      <label class="block mb-4">
+        <span class="text-gray-700">Full Name</span>
+        <input name="name" required type="text"
+          class="mt-1 block w-full rounded border border-gray-600 shadow-sm focus:ring-red-500 focus:border-red-600" />
+      </label>
+
+      <label class="block mb-4">
+        <span class="text-gray-700">WhatsApp Number</span>
+        <input name="whatsapp" required type="tel" pattern="[0-9]{10}"
+          class="mt-1 block w-full rounded border border-gray-600 shadow-sm focus:ring-red-500 focus:border-red-600" />
+      </label>
+
+      <label class="block mb-4">
+        <span class="text-gray-700">Email Address</span>
+        <input name="address" required type="text"
+          class="mt-1 block w-full rounded border border-gray-600 shadow-sm focus:ring-red-500 focus:border-red-600">
+      </label>
+
+      <!-- Back and Submit Buttons -->
+      <div class="flex justify-between space-x-4 mt-6">
+        <a href="index.html"
+          class="w-1/2 text-center bg-red-600 text-white py-2 px-4 rounded hover:bg-gray-400 transition">
+          Back
+        </a>
+        <button type="submit"
+          class="w-1/2 text-center bg-red-600 text-white py-2 px-4 rounded hover:bg-gray-400 transition">
+          Submit
+        </button>
+      </div>
+    </form>
+
+    <!-- Success Message -->
+    <p id="successMessage" class="text-green-600 font-semibold text-center mt-4 hidden">
+      Your details are submitted. We will contact you soon through WhatsApp.
+    </p>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const form = document.getElementById("contactForm");
+    const message = document.getElementById("successMessage");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = form.name.value.trim();
+      const whatsapp = form.whatsapp.value.trim();
+      const address = form.address.value.trim();
+
+      fetch("https://hook.eu2.make.com/j3ulozvp0hjft8nxropn9z8ofwcigm7f", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, whatsapp, address })
+      })
+      .then(res => {
+        if (res.ok) {
+          form.reset();
+          message.classList.remove("hidden");
+        } else {
+          alert("Submission failed. Please try again.");
+        }
+      })
+      .catch(err => {
+        console.error("Error:", err);
+        alert("Something went wrong. Please try again later.");
+      });
+    });
+  </script>
+
+</body>
+</html>
